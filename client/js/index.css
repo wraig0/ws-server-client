@@ -1,11 +1,25 @@
 body {
-    font-family: monospace;
     overflow: hidden;
+    background-color: rgb(210, 210, 210);
+    padding: 10px;
+    font-family: "Google Sans", -apple-system;
+}
+h4{
+    text-align: center;
 }
 section#head {
-    height: 10vh;
+    height: 140px;
+    max-height: 140px;
+    margin: 0 auto;
+    width: 50vw;
+    overflow: hidden;
 }
-section#out {
-    height: 90vh;
+section#body {
+    width: 50vw;
+    margin: 0 auto;
+    
+}
+pre#out {
+    height: calc(100vh - 190px);
     overflow: scroll;
 }

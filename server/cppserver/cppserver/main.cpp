@@ -260,7 +260,7 @@ int main(int argc, char* argv[])
     auto const port = static_cast<unsigned short>(std::atoi(argv[2]));
     auto const threads = std::max<int>(1, std::atoi(argv[3]));
 
-    std::cout << "Starting WebSocket server on " << address << ":" << port << " with " << threads << " thread." << "\n";
+    std::cout << "Starting WebSocket server on " << address << ":" << port << " with " << threads << " thread(s)." << "\n";
     // The io_context is required for all I/O
     net::io_context ioc{ threads };
 
