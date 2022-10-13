@@ -1,0 +1,11 @@
+body {
+    font-family: monospace;
+    overflow: hidden;
+}
+section#head {
+    height: 10vh;
+}
+section#out {
+    height: 90vh;
+    overflow: scroll;
+}

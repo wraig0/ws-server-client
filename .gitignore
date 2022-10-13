@@ -1,0 +1,10 @@
+.vs
+
+# Built files
+*.tlog
+*.idb
+*.pdb
+*.dll
+*.pch
+*.aps
+*.exe
