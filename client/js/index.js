@@ -1,5 +1,9 @@
 // Starts a websocket connection, sends a message and writes the response to the output element.
 (() => {
+  let x = 0,
+    y = 0,
+    times = [];
+
   const url = "ws://localhost:3001";
   const ws = new WebSocket(url);
   const Events = {
@@ -14,10 +18,21 @@
     TEXT: "text",
     COORDS: "coords",
   };
+  const fps = document.getElementById("fps");
   const input = document.getElementById("textInput");
   const out = document.getElementById("out");
   const coords = document.getElementById("coords");
   const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  const WIDTH = window.innerWidth - 20;
+  const HEIGHT = window.innerHeight - 50;
+  const REAL_WIDTH = 3840;
+  const REAL_HEIGHT = 2160;
+  const img = new Image(WIDTH, HEIGHT);
+  canvas.width = WIDTH;
+  canvas.height = HEIGHT;
+  img.onload = () => ctx.drawImage(img, x, y);
 
   const sendMessage = (t) => {
     const msg = {
@@ -79,13 +94,25 @@
     out.innerText = `${time} - ${response.value}\n${out.innerText}`;
   };
 
+  const updateFps = () => {
+    console.log(times);
+    const now = Date.now();
+    times = times.filter((tim) => now - tim < 1000);
+    times.push(now);
+    fps.innerText = `fps: ${times.length}`;
+  };
+
   const onMessage = (e) => {
     const response = JSON.parse(e.data);
     if (response.type === MsgType.TEXT) {
       handleTextMessage(response);
     } else if (response.type === MsgType.COORDS) {
       if (!coords) return; //throw new Error("coords not defined");
-      coords.innerText = `x: ${response.value.x}, y: ${response.value.y}`;
+      x = response.value.x;
+      y = response.value.y;
+      coords.innerText = `x: ${x}, y: ${y}`;
+      ctx.drawImage(img, x - REAL_WIDTH / 2, y - REAL_HEIGHT / 2);
+      updateFps();
     }
   };
 
@@ -97,13 +124,6 @@
   fetch("/client/js/space4k.jpg")
     .then((response) => response.blob())
     .then((blob) => {
-      const ctx = canvas.getContext("2d");
-      const WIDTH = window.innerWidth - 20;
-      const HEIGHT = window.innerHeight - 200;
-      const img = new Image(WIDTH, HEIGHT);
-      canvas.width = WIDTH;
-      canvas.height = HEIGHT;
-      img.onload = () => ctx.drawImage(img, -300, -300);
       img.src = URL.createObjectURL(blob);
     })
     .catch((e) => console.error(e));

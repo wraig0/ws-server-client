@@ -53,6 +53,7 @@ public:
         session(tcp::socket&& socket)
         : ws_(std::move(socket))
     {
+        std::cout << "Starting session\n";
     }
 
     // Get on the correct executor

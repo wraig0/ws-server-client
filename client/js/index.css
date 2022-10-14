@@ -7,6 +7,7 @@ body {
 h4{
     text-align: center;
 }
+
 section#head {
     height: 140px;
     max-height: 140px;
@@ -22,4 +23,9 @@ section#body {
 pre#out {
     height: calc(100vh - 190px);
     overflow: scroll;
+}
+pre.mini {
+    display: inline-block;
+    width: 200px;
+    margin-bottom: 0;
 }
